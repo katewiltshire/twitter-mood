@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Title{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form action="/analyse" method="POST">
+    <input type="text" name="twitter_username"/>
+    <input type="text" name="twitter_hashtag"/>
+    <input type="submit"/>
+  </form>
+{% endblock %}

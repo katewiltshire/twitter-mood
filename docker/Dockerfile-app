@@ -1,0 +1,7 @@
+FROM python:3.5-jessie
+ENV PYTHONUNBUFFERED 1
+RUN apt-get update && apt-get install -y \
+    libmysqlclient-dev \
+    psmisc \
+    python3.4-dev \
+    sudo
