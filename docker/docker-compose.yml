@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile-app
     command: /bin/bash -c "cd /var/www/app/src && pip3 install -r requirements/base.txt && cd flask && export FLASK_APP=app.py && export FLASK_ENV=development && python -m flask run --host=0.0.0.0 --port=8000 || sleep 100000"
-    container_name: kate-grumpy_app
-    image: kate-grumpy_app-image
+    container_name: twitter-mood_app
+    image: twitter-mood_app-image
     ports:
       - '8000:8000'
       - '10022:22'
@@ -20,10 +20,10 @@ services:
       context: .
       dockerfile: Dockerfile-nodejs
     command: /bin/bash -c "/var/www/app/docker/config/nodejs/npm_install.sh && /var/www/app/docker/config/nodejs/npm_build.sh || sleep 100000"
-    container_name: kate-grumpy_nodejs
+    container_name: twitter-mood_nodejs
     depends_on:
       - app
-    image: kate-grumpy_nodejs-image
+    image: twitter-mood_nodejs-image
     volumes:
       - ../:/var/www/app:cached
 
@@ -32,12 +32,12 @@ services:
       context: .
       dockerfile: Dockerfile-nginx
     command: /bin/bash -c "rm -rf /etc/nginx/conf.d/default.conf && rm -rf /etc/nginx/proxy_params && ln -s /var/www/app/docker/config/nginx/local.conf /etc/nginx/conf.d/default.conf && ln -s /var/www/app/docker/config/nginx/proxy_params /etc/nginx/proxy_params && nginx -g 'daemon off;' || sleep 100000"
-    container_name: kate-grumpy_nginx
+    container_name: twitter-mood_nginx
     depends_on:
       - app
     links:
       - app
-    image: kate-grumpy_nginx-image
+    image: twitter-mood_nginx-image
     ports:
       - '80:80'
       - '443:443'

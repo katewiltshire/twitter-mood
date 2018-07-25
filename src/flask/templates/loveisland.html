@@ -1,12 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+  {% for score in couple_scores %}
+    {{ loop.index }}: {{ score.pair }} ({{ score.score }})<br/>
+  {% endfor %}
   
-  <canvas id="myChart" width="400" height="400"></canvas>
-
-  <script>
-    var tweets = {{ analysis|tojson }};
-    console.log(tweets)
-  </script>
 {% endblock %}

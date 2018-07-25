@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from tweet_fetcher import TweetFetcher
 from loveisland_fetcher import LoveIslandFetcher
-from sentiment_analyser import SentimentAnalyser
 
 app = Flask(__name__)
 
@@ -26,6 +25,8 @@ def analyse_tweets():
 @app.route('/loveisland')
 def love_island():
     tweet_fetcher = LoveIslandFetcher()
-    tweets = tweet_fetcher.get_tweets_for_hashtag('loveisland')
+    couple_scores = tweet_fetcher.get_couple_scores()
 
-    return render_template('loveisland.html', analysis=tweets)
+
+
+    return render_template('loveisland.html', couple_scores=couple_scores)
