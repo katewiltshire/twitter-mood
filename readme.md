@@ -6,8 +6,8 @@ This is a project which makes use of the twitter API and sentiment analysis to e
 
 - [tweepy](http://www.tweepy.org/) - python library for accessing the twitter API
 - [vader sentiment analysis](https://github.com/cjhutto/vaderSentimentfl) - for sentiment analysis
-- [flask python microframework](http://flask.pocoo.org/) - python microframework
-- [docker](https://www.docker.com/) - for running locally
+- [flask](http://flask.pocoo.org/) - the python microframework
+- [docker](https://www.docker.com/) - for running the project locally
 
 ## Projects
 
