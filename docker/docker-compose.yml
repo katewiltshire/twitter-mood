@@ -15,18 +15,6 @@ services:
       - ../:/var/www/app:cached
       - ./log/app:/var/log/gunicorn:cached
 
-  nodejs:
-    build:
-      context: .
-      dockerfile: Dockerfile-nodejs
-    command: /bin/bash -c "/var/www/app/docker/config/nodejs/npm_install.sh && /var/www/app/docker/config/nodejs/npm_build.sh || sleep 100000"
-    container_name: twitter-mood_nodejs
-    depends_on:
-      - app
-    image: twitter-mood_nodejs-image
-    volumes:
-      - ../:/var/www/app:cached
-
   nginx:
     build:
       context: .
