@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from tweet_fetcher import TweetFetcher
+from sentiment_analyser import SentimentAnalyser
 from loveisland_fetcher import LoveIslandFetcher
 
 app = Flask(__name__)
@@ -8,18 +9,22 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html')
     
-@app.route('/analyse', methods=['POST'])
-def analyse_tweets():
-    twitter_user = request.form.get('twitter_username')
-    hashtag = request.form.get('twitter_hashtag')
+@app.route('/mood/<user_name>')
+def analyse_tweets(user_name):
+    scores = []
 
     tweet_fetcher = TweetFetcher()
-    if twitter_user:
-        tweets = tweet_fetcher.get_tweets_for_user(twitter_user)
-    elif hashtag:
-        tweets = tweet_fetcher.get_tweets_for_hashtag(hashtag)
+    if user_name:
+        tweets = tweet_fetcher.get_tweets_for_user(user_name)
 
-    return render_template('results.html', analysis=[])
+        analyser = SentimentAnalyser()
+        for tweet in tweets:
+            score = analyser.get_sentiment_for_text(tweet)
+            scores.append(score)
+    
+    print('scores', scores)
+    
+    return render_template('mood.html', scores=scores)
 
 
 @app.route('/loveisland')

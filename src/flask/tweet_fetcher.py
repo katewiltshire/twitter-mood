@@ -8,6 +8,7 @@ class TweetFetcher:
   def __init__(self):
     self._setup_auth()
 
+
   '''
   Setup authentication for twitter API
   '''
@@ -17,6 +18,7 @@ class TweetFetcher:
     auth.set_access_token(keys['access_token'], keys['access_token_secret'])
 
     self.api = tweepy.API(auth, wait_on_rate_limit=True)
+
 
   '''
   Returns all tweets for a given twitter username
@@ -54,6 +56,7 @@ class TweetFetcher:
         tweets_list.append(utils.strip_all_entities(tweet))
 
     return tweets_list
+
 
   '''
   Returns generic query for twitter, removes retweets and links
