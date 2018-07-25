@@ -11,9 +11,9 @@ This is a project which makes use of the twitter API and sentiment analysis to e
 
 ## Projects
 
-### Loveisland
+### #Loveisland
 
-Who is going to win love island? This tracks #loveisland tweets over the last 24 hours. Breaks them into tweets about each couple, and orders them by sentiment to predict who will win.
+Who is going to win love island? Who cares? I do. This tracks #loveisland tweets over the last 24 hours. Breaks them into tweets about each couple, and orders them by sentiment to predict who will win.
 
 ### Mood
 
@@ -35,3 +35,4 @@ This will spin up your docker container. Navigate to localhost and you should se
 
 Thanks goes to:
 - Massi for the docker setup
+- Chris for the #loveisland idea
