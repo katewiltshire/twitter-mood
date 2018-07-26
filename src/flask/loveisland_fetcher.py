@@ -3,9 +3,13 @@ from sentiment_analyser import SentimentAnalyser
 import tweepy
 from datetime import datetime, timedelta
 
+
 class LoveIslandFetcher(TweetFetcher):
 
-  def get_love_island_tweets(self, hashtag='#loveisland', quantity=10):
+  '''
+  Returns all tweets in the last 24 hours with the hashtag love island
+  '''
+  def get_love_island_tweets(self, hashtag='#loveisland', quantity=100):
 
     # get 24 hours ago
     now = datetime.today().now()
@@ -27,6 +31,9 @@ class LoveIslandFetcher(TweetFetcher):
 
     self.pair_tweets = pair_tweets
 
+  '''
+  Returns list of pairs
+  '''
   def _get_pairs(self):
     return [
       'jack dani',
@@ -37,17 +44,20 @@ class LoveIslandFetcher(TweetFetcher):
       'josh kaz',
     ]
   
+  '''
+  Returns a string of all people (appended by '-') excluding the pair we are searching for
+  '''
   def _get_exclude_string(self, pair):
     # get a string for the pair, e.g. "jack dani"
     this_pair = pair.split()
     # get a string of all pairs, e.g. "jack dani laura jack wes megan"
-    other_pairs = " ".join(self._get_pairs()).split()
+    all_pairs = " ".join(self._get_pairs()).split()
     # filter out from this list the names in this_pair, e.g. "laura jack wes megan"
-    resultwords  = [word for word in other_pairs if word.lower() not in this_pair]
-    # append a - before each name, e.g. "-laura -jack -wes -megan"
-    result_string = "-" + " -".join(resultwords)
+    pairs_without_this_pair  = [name for name in all_pairs if name not in this_pair]
+    # append a '-' before each name, e.g. "-laura -jack -wes -megan"
+    search_string = "-%s" % (" -".join(pairs_without_this_pair))
 
-    return result_string
+    return search_string
 
 
   '''
@@ -58,18 +68,22 @@ class LoveIslandFetcher(TweetFetcher):
 
     # Get tweets
     self.get_love_island_tweets()
+    # Get formatted tweets categorised by pair
     all_tweets = self.pair_tweets
 
     couple_scores = []
-    # Loop through the tweets and sum up the compound for sentiment of each tweet
+    # Loop through the tweets and get a list of compound score for sentiment of each tweet
     for pair in all_tweets:
-      score = 0
+      score = []
       pair_tweets = all_tweets[pair]
       for tweet in pair_tweets:
-        score = score + analyser.get_sentiment_for_text(tweet)
+        score.append(analyser.get_sentiment_for_text(tweet))
+
+      # get the average score
+      average_score = sum(score) / float(len(score))
       couple_scores.append({
         'pair': pair,
-        'score': score
+        'score': average_score
       })
 
     # sort them by their total score
