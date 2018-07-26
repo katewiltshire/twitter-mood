@@ -32,7 +32,7 @@ cd src && ./bowser.sh start
 
 This will spin up your docker container. Navigate to localhost and you should see the index page.
 
-This repository does not contain any twitter API keys. You will need to create a `config.py` file in the /flask directory, with the following function, filling in your own API keys. These can be found in the (twitter apps hub)[https://apps.twitter.com/].
+This repository does not contain any twitter API keys. You will need to create a `config.py` file in the /flask directory, with the following function, filling in your own API keys. These can be found in the [twitter apps hub](https://apps.twitter.com/).
 
 ```
 def twitter_keys():
