@@ -10,12 +10,14 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
     
-@app.route('/mood')
+@app.route('/mood', methods = ['GET', 'POST'])
 def analyse_tweets():
 
     user_name = request.form.get('user_name')
     hash_tag = request.form.get('hash_tag')
     form_type = request.form.get('type')
+
+    print(user_name, hash_tag, form_type)
 
     if not user_name and not hash_tag and not form_type:
         return render_template('mood.html', type=False)
@@ -23,14 +25,18 @@ def analyse_tweets():
     scores = []
 
     tweet_fetcher = TweetFetcher()
-    if user_name:
+    if form_type == 'user_name' and user_name:
         tweets = tweet_fetcher.get_tweets_for_user(user_name)
+    elif form_type == 'hash_tag' and hash_tag:
+        tweets = tweet_fetcher.get_tweets_for_hashtag(hash_tag)
+    elif form_type == 'random':
+        query = tweet_fetcher.get_random_search()
+        print('random query is ==>', query)
+        if query['type'] is 'hash_tag':
+            tweets = tweet_fetcher.get_tweets_for_hashtag(query['param'])
+        else:
+            tweets = tweet_fetcher.get_tweets_for_user(query['param'])
 
-        analyser = SentimentAnalyser()
-        for tweet in tweets:
-            score = analyser.get_sentiment_for_text(tweet)
-            scores.append(score)
-    
     print('scores', scores)
 
     return render_template('mood.html', scores=scores, type=form_type)
