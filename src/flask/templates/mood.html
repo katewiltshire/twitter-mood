@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
-{% block header %}Mood Grapher{% endblock %}
+{% block header %}
+
+    {% if not type %}
+    <div class="col-xs-12 col-md-4 col-md-offset-4">
+      Mood Grapher 
+    </div>
+    {% else %}
+      <div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
+        Sentiment over the last 100 tweets for the {% if query.type == 'user_name' %}user @{% else %}hashtag #{% endif %}{{ query.param }}
+      <div class="col-xs-12 col-md-4 col-md-offset-4">
+    {% endif %}
+
+    {% endblock %}
 
 {% block content %}
 
 {% if not type %}
-
+    <div class="col-xs-12 col-md-4 col-md-offset-4">
       <p>
-          Track the 'mood' (sentiment) of a twitter user, or a hashtag over the last month.
+          Track the 'mood' (sentiment) of a twitter user, or a hashtag over their past 100 tweets.
       </p>
       <form action="" method="POST">
         <div class="form-group">
@@ -47,11 +59,18 @@
           <button type="submit" class="btn btn-default">Give me something RANDOM.</button>
         </div>
       </form>
+    </div>
 
 
 {% else %}
 
-  {{ scores }}
+  <div class="col-xs-12 col-md-10 col-md-offset-1">
+      <canvas id="line-chart" width="800" height="450"></canvas>
+  </div>
+  
+  <script>
+    window.scores = {{scores|tojson}}
+  </script>
 
 {% endif %}
 

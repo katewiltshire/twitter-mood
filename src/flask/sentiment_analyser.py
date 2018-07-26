@@ -37,3 +37,13 @@ class SentimentAnalyser:
     couple_scores.sort(key=lambda x: x['score'], reverse=True) 
     return couple_scores
 
+  '''
+    Returns sentiment over time from tweets
+  '''
+  def get_sentiment_over_time(self, tweets):
+    scores = []
+    for tweet in tweets:
+      scores.append(self.get_sentiment_for_text(tweet))
+
+    return scores
+
