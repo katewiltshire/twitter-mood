@@ -46,15 +46,12 @@ class TweetFetcher:
   Tidies list of tweets and returns list of just tweet text
   '''
   def _tidy_tweets(self, tweets, include_date=True):
+    print("got here", tweets)
     if not tweets:
-      return []
-    
-    if tweets.num_tweets == 0:
       return []
 
     tweets_list = []
     for tweet in tweets:
-      print("tweet text", tweet.text)
       try:
         text = utils.strip_all_entities(tweet.text)
       except AttributeError:
@@ -75,7 +72,8 @@ class TweetFetcher:
   Returns generic query for twitter, removes retweets and links
   '''
   def _get_query(self, hashtag, quantity):
-    return tweepy.Cursor(self.api.search, q='%s -filter:retweets -filter:links' % (hashtag), lang="en", result_type='popular').items(quantity)
+    tweets = tweepy.Cursor(self.api.search, q='%s -filter:retweets -filter:links' % hashtag, lang="en", result_type='popular').items(quantity)
+    return tweets
 
 
   '''

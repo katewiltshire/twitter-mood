@@ -64,6 +64,7 @@ def love_island():
 
     if not TESTING:
         love_island_tweets = tweet_fetcher.get_love_island_tweets()
+        print("love island tweets =>", love_island_tweets)
     else:
         love_island_tweets = TEST_TWEETS
 

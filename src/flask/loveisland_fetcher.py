@@ -22,14 +22,15 @@ class LoveIslandFetcher(TweetFetcher):
     pair_tweets = {}
     for pair in pairs:
       exclude_string = self._get_exclude_string(pair)
-      tweets = tweepy.Cursor(self.api.search, q='%s %s -filter:retweets %s' % (hashtag, pair, exclude_string), since=yesterday, until=now, lang="en").items(quantity)
+      tweets = tweepy.Cursor(self.api.search, q='%s %s -filter:retweets -filter:links %s' % (hashtag, pair, exclude_string), since=yesterday, until=now, lang="en").items(quantity)
+
       if not tweets:
         pair_tweets[pair] = []
       else:
         tidied_tweets = self._tidy_tweets(tweets, include_date=False)
         pair_tweets[pair] = tidied_tweets
 
-    self.pair_tweets = pair_tweets
+    return pair_tweets
 
   '''
   Returns list of pairs
@@ -37,7 +38,6 @@ class LoveIslandFetcher(TweetFetcher):
   def _get_pairs(self):
     return [
       'jack dani',
-      'laura jack',
       'wes megan',
       'laura paul',
       'alex alexandra',
