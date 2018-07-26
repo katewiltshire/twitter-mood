@@ -4,9 +4,36 @@ class SentimentAnalyser:
   def __init__(self):
     self.analyzer = SentimentIntensityAnalyzer()
 
+  '''
+  Returns the sentiment for a piece of text
+  '''
   def get_sentiment_for_text(self, text):
     score = self.analyzer.polarity_scores(text)
 
     if score:
       return score['compound']
     return 0
+
+  '''
+  Returns a sentiment score against each couple in love island
+  '''
+  def get_love_island_couple_scores(self, all_tweets):
+    couple_scores = []
+    # Loop through the tweets and get a list of compound score for sentiment of each tweet
+    for pair in all_tweets:
+      score = []
+      pair_tweets = all_tweets[pair]
+      for tweet in pair_tweets:
+        score.append(self.get_sentiment_for_text(tweet))
+
+      # get the average score
+      average_score = sum(score) / float(len(score))
+      couple_scores.append({
+        'pair': pair,
+        'score': average_score
+      })
+
+    # sort them by their total score
+    couple_scores.sort(key=lambda x: x['score'], reverse=True) 
+    return couple_scores
+
