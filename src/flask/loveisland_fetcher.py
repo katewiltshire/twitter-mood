@@ -9,20 +9,23 @@ class LoveIslandFetcher(TweetFetcher):
   '''
   Returns all tweets in the last 24 hours with the hashtag love island
   '''
-  def get_love_island_tweets(self, hashtag='#loveisland', quantity=100):
+  def get_love_island_tweets(self, hashtag='#loveisland', quantity=200):
 
     # get 24 hours ago
     now = datetime.today().now()
     yesterday = now-timedelta(days=1)
-    now = now.strftime("%Y-%m-%d")
-    yesterday = yesterday.strftime("%Y-%m-%d")
+    now = now.strftime("%Y-%m-%d %H:%M")
+    yesterday = yesterday.strftime("%Y-%m-%d %H:%M")
+
+    print("now => ", now)
+    print("yesterday =>", yesterday)
 
     pairs = self._get_pairs()
 
     pair_tweets = {}
     for pair in pairs:
       exclude_string = self._get_exclude_string(pair)
-      tweets = tweepy.Cursor(self.api.search, q='%s %s -filter:retweets -filter:links %s' % (hashtag, pair, exclude_string), since=yesterday, until=now, lang="en").items(quantity)
+      tweets = tweepy.Cursor(self.api.search, q='%s %s -filter:retweets -filter:links %s' % (hashtag, pair, exclude_string), since=now, until=now, lang="en").items(quantity)
 
       if not tweets:
         pair_tweets[pair] = []

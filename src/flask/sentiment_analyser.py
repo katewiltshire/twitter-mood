@@ -27,7 +27,9 @@ class SentimentAnalyser:
         score.append(self.get_sentiment_for_text(tweet))
 
       # get the average score
-      average_score = sum(score) / float(len(score))
+      average_score = 0
+      if len(score) > 0:
+        average_score = sum(score) / float(len(score))
       couple_scores.append({
         'pair': pair,
         'score': average_score
