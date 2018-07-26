@@ -3,6 +3,7 @@ from sentiment_analyser import SentimentAnalyser
 import tweepy
 from datetime import datetime, timedelta
 
+TESTING = True
 
 class LoveIslandFetcher(TweetFetcher):
 
@@ -67,9 +68,12 @@ class LoveIslandFetcher(TweetFetcher):
     analyser = SentimentAnalyser()
 
     # Get tweets
-    self.get_love_island_tweets()
-    # Get formatted tweets categorised by pair
-    all_tweets = self.pair_tweets
+    if not TESTING:
+      self.get_love_island_tweets()
+      # Get formatted tweets categorised by pair
+      all_tweets = self.pair_tweets
+    else:
+      all_tweets = get_test_string()
 
     couple_scores = []
     # Loop through the tweets and get a list of compound score for sentiment of each tweet

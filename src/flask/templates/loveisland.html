@@ -1,8 +1,36 @@
 {% extends 'base.html' %}
 
+
+{% block title %}
+  Love Island Twitter Sentiment Analysis
+{% endblock %}
+
+{% block header %}
+  Love Island
+{% endblock %}
+
 {% block content %}
-  {% for score in couple_scores %}
-    {{ loop.index }}: {{ score.pair }} ({{ score.score }})<br/>
-  {% endfor %}
-  
+<p>
+  Who is going to win Love Island? Who cares? I do. Based on a sentiment analysis of #loveisland tweets over the past 24 hours, the current popularity of the couples is as follows.
+</p>
+  <table class="table">
+    <tr>
+      <th></th>
+      <th>Couple</th>
+      <th>Average sentiment</th>
+    </tr>
+    {% for score in couple_scores %}
+    <tr>
+      <td>
+          {{ loop.index }}
+      </td>
+      <td>
+          {{ score.pair }}
+      </td>
+      <td>
+          {{ score.score }}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
 {% endblock %}

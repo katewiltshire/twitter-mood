@@ -9,8 +9,16 @@ app = Flask(__name__)
 def hello_world():
     return render_template('index.html')
     
-@app.route('/mood/<user_name>')
-def analyse_tweets(user_name):
+@app.route('/mood')
+def analyse_tweets():
+
+    user_name = request.form.get('user_name')
+    hash_tag = request.form.get('hash_tag')
+    form_type = request.form.get('type')
+
+    if not user_name and not hash_tag and not form_type:
+        return render_template('mood.html', type=False)
+
     scores = []
 
     tweet_fetcher = TweetFetcher()
@@ -23,8 +31,8 @@ def analyse_tweets(user_name):
             scores.append(score)
     
     print('scores', scores)
-    
-    return render_template('mood.html', scores=scores)
+
+    return render_template('mood.html', scores=scores, type=form_type)
 
 
 @app.route('/loveisland')
