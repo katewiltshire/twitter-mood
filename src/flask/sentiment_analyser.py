@@ -41,9 +41,25 @@ class SentimentAnalyser:
     Returns sentiment over time from tweets
   '''
   def get_sentiment_over_time(self, tweets):
-    scores = []
+    scores = {}
+    data = []
     for tweet in tweets:
-      scores.append(self.get_sentiment_for_text(tweet))
+      date = tweet['created_at'].date()
+      date_string = date.strftime('%Y/%m/%d')
+      sentiment = self.get_sentiment_for_text(tweet['text'])
+      if scores.get(date_string):
+        scores[date_string].append(sentiment)
+      else:
+        scores[date_string] = [sentiment]
+      data.append(sentiment)
 
-    return scores
+    for score in scores:
+      scores[score] = sum(scores[score]) / float(len(scores[score]))
+      
+    print('scores =>', scores)
+
+    return {
+      'data': data,
+      'scores': scores
+    }
 

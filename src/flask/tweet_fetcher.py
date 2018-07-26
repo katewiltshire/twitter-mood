@@ -51,11 +51,16 @@ class TweetFetcher:
 
     tweets_list = []
     for tweet in tweets:
+      print("tweet ==>", tweet.created_at)
       try:
-        tweets_list.append(utils.strip_all_entities(tweet.text))
+        text = utils.strip_all_entities(tweet.text)
       except AttributeError:
-        tweets_list.append(utils.strip_all_entities(tweet))
+        text = utils.strip_all_entities(tweet)
 
+      tweets_list.append({
+        'created_at': tweet.created_at,
+        'text': text
+      })
     return tweets_list
 
 
