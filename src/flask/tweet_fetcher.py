@@ -45,22 +45,29 @@ class TweetFetcher:
   '''
   Tidies list of tweets and returns list of just tweet text
   '''
-  def _tidy_tweets(self, tweets):
+  def _tidy_tweets(self, tweets, include_date=True):
     if not tweets:
+      return []
+    
+    if tweets.num_tweets == 0:
       return []
 
     tweets_list = []
     for tweet in tweets:
-      print("tweet ==>", tweet.created_at)
+      print("tweet text", tweet.text)
       try:
         text = utils.strip_all_entities(tweet.text)
       except AttributeError:
         text = utils.strip_all_entities(tweet)
 
-      tweets_list.append({
-        'created_at': tweet.created_at,
-        'text': text
-      })
+      if include_date:
+        tweets_list.append({
+          'created_at': tweet.created_at,
+          'text': text
+        })
+      else:
+        tweets_list.append(text)
+
     return tweets_list
 
 

@@ -56,8 +56,6 @@ class SentimentAnalyser:
     for score in scores:
       scores[score] = sum(scores[score]) / float(len(scores[score]))
       
-    print('scores =>', scores)
-
     return {
       'data': data,
       'scores': scores

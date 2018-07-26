@@ -26,7 +26,7 @@ class LoveIslandFetcher(TweetFetcher):
       if not tweets:
         pair_tweets[pair] = []
       else:
-        tidied_tweets = self._tidy_tweets(tweets)
+        tidied_tweets = self._tidy_tweets(tweets, include_date=False)
         pair_tweets[pair] = tidied_tweets
 
     self.pair_tweets = pair_tweets

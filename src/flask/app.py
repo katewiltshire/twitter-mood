@@ -4,6 +4,7 @@ from sentiment_analyser import SentimentAnalyser
 from loveisland_fetcher import LoveIslandFetcher
 
 TESTING = False
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -59,11 +60,15 @@ def analyse_tweets():
 def love_island():
     sentiment_analyser = SentimentAnalyser()
     tweet_fetcher = LoveIslandFetcher()
+    couple_scores = []
+
     if not TESTING:
         love_island_tweets = tweet_fetcher.get_love_island_tweets()
     else:
         love_island_tweets = TEST_TWEETS
-    couple_scores = sentiment_analyser.get_love_island_couple_scores(love_island_tweets)
+
+    if love_island_tweets and len(love_island_tweets) > 0:
+        couple_scores = sentiment_analyser.get_love_island_couple_scores(love_island_tweets)
 
     return render_template('loveisland.html', couple_scores=couple_scores)
 
