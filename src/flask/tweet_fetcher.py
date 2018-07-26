@@ -68,7 +68,7 @@ class TweetFetcher:
   Returns generic query for twitter, removes retweets and links
   '''
   def _get_query(self, hashtag, quantity):
-    return tweepy.Cursor(self.api.search, q='%s -filter:retweets -filter:links' % hashtag, lang="en").items(quantity)
+    return tweepy.Cursor(self.api.search, q='%s -filter:retweets -filter:links' % (hashtag), lang="en", result_type='popular').items(quantity)
 
 
   '''
