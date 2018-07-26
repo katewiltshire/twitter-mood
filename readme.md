@@ -44,6 +44,12 @@ def twitter_keys():
   }
 ```
 
+## Limitations
+
+Because I am using the free tier of the twitter API, I can't blast the API with queries. For the mood grapher, I've limited my search to the past 100 tweets and then taken an average sentiment per day. This might be effective for someone who doesn't tweet often or a less popular hashtag, but is less effective for users/hashtags with 1,000s of tweets a day - as 100 tweets might have been generated within a couple of hours.
+
+I decided to use the vader sentiment analysis package for python rather than an API, because I couldn't find a good, free sentiment analysis API.
+
 ## Thanks
 
 Thanks goes to:
