@@ -6,7 +6,7 @@ from loveisland_fetcher import LoveIslandFetcher
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
     
 @app.route('/mood')
@@ -40,6 +40,5 @@ def love_island():
     tweet_fetcher = LoveIslandFetcher()
     couple_scores = tweet_fetcher.get_couple_scores()
 
-
-
     return render_template('loveisland.html', couple_scores=couple_scores)
+
